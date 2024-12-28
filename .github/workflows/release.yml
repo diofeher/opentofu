@@ -18,7 +18,8 @@ on:
 jobs:
   release:
     name: Release
-    runs-on: larger-runners
+    # TODO: I don't have access to large-runners in my personal account
+    runs-on: ubuntu-latest
     environment: gpg
     permissions:
       contents: write
