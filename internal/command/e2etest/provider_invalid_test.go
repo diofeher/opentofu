@@ -1,6 +1,7 @@
 package e2etest
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/opentofu/opentofu/internal/e2e"
@@ -20,8 +21,10 @@ func TestProviderInvalid(t *testing.T) {
 
 	tf := e2e.NewBinary(t, tofuBin, "testdata/provider-invalid")
 
-	_, stderr, err := tf.Run("init")
-	if err != nil {
-		t.Fatalf("unexpected error: %s\n%s", err, stderr)
+	// err is expected to be non-nil, so we can ignore in this test
+	stdout, stderr, _ := tf.Run("init")
+
+	if !strings.Contains(stderr, "Duplicate required providers configuration") {
+		t.Fatalf("wrong output:\nstdout:%s\nstderr%s", stdout, stderr)
 	}
 }

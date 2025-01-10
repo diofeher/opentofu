@@ -31,8 +31,6 @@ func BuildConfig(root *Module, walker ModuleWalker) (*Config, hcl.Diagnostics) {
 	}
 	cfg.Root = cfg // Root module is self-referential.
 
-	fmt.Println("cfg", cfg)
-	fmt.Println("walker")
 	cfg.Children, diags = buildChildModules(cfg, walker)
 	diags = append(diags, buildTestModules(cfg, walker)...)
 

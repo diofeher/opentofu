@@ -35,7 +35,7 @@ type RequiredProviders struct {
 func decodeRequiredProvidersBlock(block *hcl.Block) (*RequiredProviders, hcl.Diagnostics) {
 	attrs, diags := block.Body.JustAttributes()
 	if diags.HasErrors() {
-		return nil, diags
+		return &RequiredProviders{}, diags
 	}
 
 	ret := &RequiredProviders{
