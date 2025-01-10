@@ -30,6 +30,9 @@ func BuildConfig(root *Module, walker ModuleWalker) (*Config, hcl.Diagnostics) {
 		Module: root,
 	}
 	cfg.Root = cfg // Root module is self-referential.
+
+	fmt.Println("cfg", cfg)
+	fmt.Println("walker")
 	cfg.Children, diags = buildChildModules(cfg, walker)
 	diags = append(diags, buildTestModules(cfg, walker)...)
 
@@ -118,10 +121,13 @@ func buildChildModules(parent *Config, walker ModuleWalker) (map[string]*Config,
 	var diags hcl.Diagnostics
 	ret := map[string]*Config{}
 
+	fmt.Println("parent.Module", parent.Module)
 	calls := parent.Module.ModuleCalls
 
 	// We'll sort the calls by their local names so that they'll appear in a
 	// predictable order in any logging that's produced during the walk.
+
+	fmt.Println("DIOGENES", calls)
 	callNames := make([]string, 0, len(calls))
 	for k := range calls {
 		callNames = append(callNames, k)
